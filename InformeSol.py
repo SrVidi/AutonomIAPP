@@ -30,4 +30,3 @@ report_final = chain_2.run({"INFORME_ORIGINAL": report_original, "CORRECCIONES":
 
 # Output the final report
 print(report_final)
-```
