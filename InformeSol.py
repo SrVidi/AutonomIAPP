@@ -34,7 +34,7 @@ def main():
     st.title("INNEX: INFORME IA (W-R-F)")
 
     # File uploader
-    uploaded_file = st.file_uploader("Choose a file", type=["txt", "docx"])
+    uploaded_file = st.file_uploader("Choose a file", type=["txt", "docx", "pdf"])
 
     if uploaded_file is not None:
         # Read the content of the uploaded file
