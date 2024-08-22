@@ -1,7 +1,7 @@
 _type: prompt
 input_variables:
   - INFORME_ORIGINAL
-  - CORRECCIONES
+  - DOCUMENTOS_CLINICOS
 template: |
   Eres un asistente experto en informes clínicos. Se te proporcionará un informe de alta clínica generado por otro asistente, junto con un documento de correcciones sugeridas por un tercer asistente. Tu tarea es generar un informe de alta final incorporando las correcciones indicadas.
   
@@ -14,7 +14,7 @@ template: |
   Documento de correcciones: 
   
   <correcciones>
-  {CORRECCIONES}
+  {DOCUMENTOS_CLINICOS}
   </correcciones>
   
   Instrucciones:
