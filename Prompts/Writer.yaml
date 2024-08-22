@@ -37,10 +37,10 @@ template: |
 
   ## Historial médico
   [Un resumen de los antecedentes personales, destacando aquellos datos que por su significación positiva o negativa ayuden a hacer más comprensible el proceso nosológico. Solo considerar historial hasta la fecha de ingreso]
-  **Antecedentes familiares:** [Resumen de los antecedentes familiares relevantes]
-  **Alergias:** [Listado de alergias si existen]
-  **Hábitos tóxicos:** [Listado de Hábitos tóxicos manifestados si existen]
-  **Estado basal:** [Resumen del estado basal del paciente]
+  \n**Antecedentes familiares:** [Resumen de los antecedentes familiares relevantes]
+  \n**Alergias:** [Listado de alergias si existen]
+  \n**Hábitos tóxicos:** [Listado de Hábitos tóxicos manifestados si existen]
+  \n**Estado basal:** [Resumen del estado basal del paciente]
 
   ---
 
