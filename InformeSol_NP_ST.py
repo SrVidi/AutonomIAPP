@@ -15,8 +15,8 @@ def read_uploaded_file(uploaded_file):
 
 # Load prompts from files
 prompt_template_WRITER = load_prompt("Prompts/Writer.yaml")
-prompt_template_TREATMENT = load_prompt("Prompts/Treatment.yaml")
 prompt_template_REVISOR = load_prompt("Prompts/Revisor.yaml")
+prompt_template_CORRECTOR = load_prompt("Prompts/Corrector.yaml")
 prompt_template_FINAL = load_prompt("Prompts/Final.yaml")
 
 # Streamlit app
@@ -42,16 +42,16 @@ def main():
 
                     # Create chains
                     chain_1 = RunnableSequence(prompt_template_WRITER, gemini_pro)
-                    chain_2 = RunnableSequence(prompt_template_TREATMENT, gemini_pro)
-                    chain_3 = RunnableSequence(prompt_template_REVISOR, gemini_flash)
+                    chain_2 = RunnableSequence(prompt_template_REVISOR, gemini_flash)
+                    chain_3 = RunnableSequence(prompt_template_CORRECTOR, gemini_pro)
                     chain_4 = RunnableSequence(prompt_template_FINAL, gemini_flash)
                     
 
                     # Generate reports
                     report_original = chain_1.invoke({"DOCUMENTOS_CLINICOS": file_content})
-                    report_treatment = chain_2.invoke({"DOCUMENTOS_CLINICOS": file_content})
-                    corrections = chain_3.invoke({"DOCUMENTOS_CLINICOS": file_content, "INFORME_ORIGINAL": report_original})
-                    report_final = chain_4.invoke({"INFORME_ORIGINAL": report_original, "TRATAMIENTOS": report_treatment, "CORRECCIONES": corrections})
+                    report_revised = chain_2.invoke({"DOCUMENTOS_CLINICOS": file_content}, {"INFORME_ORIGINAL": report_original})
+                    report_corrected = chain_3.invoke({"INFORME_ORIGINAL": report_original}, {"CORRECCIONES": report_revised})
+                    report_final = chain_4.invoke({"REPORT_FINAL": report_corrected})
 
                     # Display the final report
                     st.markdown(report_final.content)
