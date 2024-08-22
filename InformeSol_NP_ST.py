@@ -49,8 +49,8 @@ def main():
 
                     # Generate reports
                     report_original = chain_1.invoke({"DOCUMENTOS_CLINICOS": file_content})
-                    report_revised = chain_2.invoke({"DOCUMENTOS_CLINICOS": file_content}, {"INFORME_ORIGINAL": report_original})
-                    report_corrected = chain_3.invoke({"INFORME_ORIGINAL": report_original}, {"CORRECCIONES": report_revised})
+                    report_revised = chain_2.invoke({"DOCUMENTOS_CLINICOS": file_content, "INFORME_ORIGINAL": report_original})
+                    report_corrected = chain_3.invoke({"INFORME_ORIGINAL": report_original, "CORRECCIONES": report_revised})
                     report_final = chain_4.invoke({"REPORT_FINAL": report_corrected})
 
                     # Display the final report
