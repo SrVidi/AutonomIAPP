@@ -14,7 +14,7 @@ template: |
   Documento de correcciones: 
   
   <correcciones>
-  {DOCUMENTOS_CLINICOS}
+  {Correcciones}
   </correcciones>
   
   Instrucciones:
