@@ -1,6 +1,7 @@
 _type: prompt
 input_variables:
   - DOCUMENTOS_CLINICOS
+  - INFORME_ORIGINAL
 template: |
   Eres un experto revisor de documentos clínicos. 
 
