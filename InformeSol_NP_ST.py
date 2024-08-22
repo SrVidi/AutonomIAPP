@@ -43,8 +43,8 @@ def main():
                     # Create chains
                     chain_1 = RunnableSequence(prompt_template_WRITER, gemini_pro)
                     chain_2 = RunnableSequence(prompt_template_REVISOR, gemini_flash)
-                    chain_3 = RunnableSequence(prompt_template_CORRECTOR, gemini_pro)
-                    chain_4 = RunnableSequence(prompt_template_FINAL, gemini_flash)
+                    chain_3 = RunnableSequence(prompt_template_CORRECTOR, gemini_flash)
+                    chain_4 = RunnableSequence(prompt_template_FINAL, gemini_pro)
                     
 
                     # Generate reports
