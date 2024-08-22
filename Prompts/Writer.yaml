@@ -84,7 +84,7 @@ template: |
   [Listado del proceso patológico o afección que tras el estudio pertinente y según criterio facultativo, se considera la causa principal o motivo del ingreso o contacto de la persona en el hospital.]
   ### Diagnóstico/s secundario/s:
   [Listado de patologías que coexisten con la considerada diagnóstico principal en el momento del ingreso o se desarrolla durante la estancia hospitalaria e influye en su duración o en los cuidados administrados.]
-  ### Diagnóstico/s adicional/s:
+  ### Diagnóstico/s adicional/es:
   ### Diagnóstico/s de complicaciones:
 
   ---
