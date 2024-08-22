@@ -21,7 +21,7 @@ prompt_template_FINAL = load_prompt("Prompts/Final.yaml")
 
 # Streamlit app
 def main():
-    st.title("INNEX: INFORME IA")
+    st.title("INNEX: INFORME ALTA MÉDICA, IA W-T-R-F")
 
     # File uploader
     uploaded_file = st.file_uploader("Choose a file", type=["txt", "docx"])
