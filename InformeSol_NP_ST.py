@@ -37,8 +37,8 @@ def main():
             if google_api_key:
                 with st.spinner("Processing document..."):
                     # Initialize language models
-                    gemini_pro = ChatGoogleGenerativeAI(model="gemini-1.5-pro", google_api_key=google_api_key, temperature="0.0")
-                    gemini_flash = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=google_api_key, temperature="0.0")
+                    gemini_pro = ChatGoogleGenerativeAI(model="gemini-1.5-pro", google_api_key=google_api_key, temperature="0.1")
+                    gemini_flash = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=google_api_key, temperature="0.1")
 
                     # Create chains
                     chain_1 = RunnableSequence(prompt_template_WRITER, gemini_pro)
