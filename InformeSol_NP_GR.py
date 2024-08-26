@@ -3,14 +3,14 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.runnables import RunnableSequence
 from langchain.prompts import load_prompt
 from docx import Document
-import io
 
+# Function to read the content of the uploaded file
 def read_uploaded_file(file):
     if file.name.endswith('.docx'):
-        doc = Document(io.BytesIO(file.read()))
+        doc = Document(file)  # Pass the file object directly
         return ' '.join([paragraph.text for paragraph in doc.paragraphs])
     else:
-        return file.read().decode('utf-8')
+        return file.read().decode("utf-8")  # For text files, read the content directly
 
 # Load prompts from files
 prompt_template_WRITER = load_prompt("Prompts/Writer.yaml")
