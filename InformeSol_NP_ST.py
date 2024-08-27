@@ -56,7 +56,7 @@ def main():
                     # Display the final report
                     st.markdown(report_final.content)
             else:
-                st.error("Please enter your Google API Key to process the document.")
+                st.error("Please enter a Google API Key to process the document.")
 
 if __name__ == "__main__":
     main()
