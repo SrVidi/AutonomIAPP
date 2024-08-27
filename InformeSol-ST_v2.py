@@ -14,10 +14,10 @@ def read_uploaded_file(uploaded_file):
         return uploaded_file.getvalue().decode("utf-8")
 
 # Load prompts from files
-prompt_template_WRITER = load_prompt("C:/Users/marcv/PYTHON/InformeSol/PromptsV2/Writer.yaml")
-prompt_template_TREATMENT = load_prompt("C:/Users/marcv/PYTHON/InformeSol/PromptsV2/Treatment.yaml")
-prompt_template_REVISOR = load_prompt("C:/Users/marcv/PYTHON/InformeSol/PromptsV2/Revisor.yaml")
-prompt_template_FINAL = load_prompt("C:/Users/marcv/PYTHON/InformeSol/PromptsV2/Final.yaml")
+prompt_template_WRITER = load_prompt("PromptsV2/Writer.yaml")
+prompt_template_TREATMENT = load_prompt("PromptsV2/Treatment.yaml")
+prompt_template_REVISOR = load_prompt("PromptsV2/Revisor.yaml")
+prompt_template_FINAL = load_prompt("PromptsV2/Final.yaml")
 
 # Streamlit app
 def main():
