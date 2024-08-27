@@ -18,15 +18,15 @@ prompt_template_REVISOR = load_prompt("Prompts/Revisor.yaml")
 prompt_template_CORRECTOR = load_prompt("Prompts/Corrector.yaml")
 prompt_template_FINAL = load_prompt("Prompts/Final.yaml")
 
-def process_document(file, google_api_key):
+def process_document(file, google_api_key, temperature):
     if not file or not google_api_key:
         return "Please upload a file and enter your Google API Key."
 
     file_content = read_uploaded_file(file)
 
-    # Initialize language models
-    gemini_pro = ChatGoogleGenerativeAI(model="gemini-1.5-pro", google_api_key=google_api_key)
-    gemini_flash = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=google_api_key)
+    # Initialize language models with temperature
+    gemini_pro = ChatGoogleGenerativeAI(model="gemini-1.5-pro", google_api_key=google_api_key, temperature=temperature)
+    gemini_flash = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=google_api_key, temperature=temperature)
 
     # Create chains
     chain_1 = RunnableSequence(prompt_template_WRITER, gemini_pro)
@@ -47,11 +47,12 @@ iface = gr.Interface(
     fn=process_document,
     inputs=[
         gr.File(label="Upload a file (txt or docx)"),
-        gr.Textbox(label="Enter your Google API Key", type="password")
+        gr.Textbox(label="Enter your Google API Key", type="password"),
+        gr.Slider(minimum=0.0, maximum=1.0, step=0.1, value=0.1, label="Temperature")
     ],
     outputs=gr.Markdown(label="Generated Report"),
     title="INFORME ALTA MÉDICA, IA W-T-R-F",
-    description="Upload a medical document and enter your Google API Key to generate a report."
+    description="Upload a medical document, enter your Google API Key, and adjust the temperature to generate a report."
 )
 
 # Launch the Gradio app
