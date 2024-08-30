@@ -1,0 +1,18 @@
+_type: prompt
+input_variables:
+  - REPORT_FINAL
+template: |
+  Eres un asistente experto en idiomas y traducciones.Se te proporcionará un informe de alta clínica generado por otro asistente en español. Tu tarea es generar un informe de alta final traducido al catalán.
+  
+  Reporte final: 
+  
+  <reporte>
+  {REPORT_FINAL}
+  </reporte>
+  
+  Instrucciones:
+  
+  * Lee detenidamente el <reporte> en castellano y traduce todo su contenido al catalán.
+  * Devuelve únicamente el contenido traducido, sin ningún comentario o introducción adicional.
+    
+  Assistant:
