@@ -53,9 +53,6 @@ def main():
                     report_corrected = chain_3.invoke({"INFORME_ORIGINAL": report_original, "CORRECCIONES": report_revised})
                     report_final = chain_4.invoke({"REPORT_FINAL": report_corrected})
 
-                    # Display the final report
-                    st.markdown(report_final.content)
-
                     # Create a download button for the final report
                     doc = Document()
                     doc.add_paragraph(report_final.content)
@@ -69,6 +66,10 @@ def main():
                         file_name="final_report.docx",
                         mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                     )
+
+                    # Display the final report
+                    st.markdown(report_final.content)
+
             else:
                 st.error("Please enter your Google API Key to process the document.")
 
