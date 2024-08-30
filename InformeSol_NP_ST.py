@@ -6,12 +6,12 @@ from docx import Document
 import io
 
 # Function to read the content of the uploaded file
-def read_uploaded_file(uploaded_file):
-    if uploaded_file.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-        doc = Document(io.BytesIO(uploaded_file.getvalue()))
+def read_uploaded_file(file):
+    if file.name.endswith('.docx'):
+        doc = Document(file)  # Pass the file object directly
         return ' '.join([paragraph.text for paragraph in doc.paragraphs])
     else:
-        return uploaded_file.getvalue().decode("utf-8")
+        return file.read().decode("utf-8")  # For text files, read the content directly
 
 # Load prompts from files
 prompt_template_WRITER = load_prompt("Prompts/Writer.yaml")
@@ -55,8 +55,22 @@ def main():
 
                     # Display the final report
                     st.markdown(report_final.content)
+
+                    # Create a download button for the final report
+                    doc = Document()
+                    doc.add_paragraph(report_final.content)
+                    
+                    bio = io.BytesIO()
+                    doc.save(bio)
+                    
+                    st.download_button(
+                        label="Download Report as DOCX",
+                        data=bio.getvalue(),
+                        file_name="final_report.docx",
+                        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    )
             else:
-                st.error("Please enter a Google API Key to process the document.")
+                st.error("Please enter your Google API Key to process the document.")
 
 if __name__ == "__main__":
     main()
