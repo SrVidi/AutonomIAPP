@@ -21,7 +21,6 @@ prompt_template_REVISOR = load_prompt("Prompts/Revisor.yaml")
 prompt_template_CORRECTOR = load_prompt("Prompts/Corrector.yaml")
 prompt_template_FINAL = load_prompt("Prompts/Final.yaml")
 prompt_template_TRANSLATOR = load_prompt("Prompts/Translator.yaml")
-prompt_template_STYLER = load_prompt("Prompts/Styler.yaml")
 
 # Streamlit app
 def main():
@@ -47,8 +46,8 @@ def main():
             if google_api_key:
                 with st.spinner("Processing document..."):
                     # Initialize language models
-                    gemini_pro = ChatGoogleGenerativeAI(model="gemini-1.5-pro", google_api_key=google_api_key, temperature="0.1")
-                    gemini_flash = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=google_api_key, temperature="0.1")
+                    gemini_pro = ChatGoogleGenerativeAI(model="gemini-1.5-pro", google_api_key=google_api_key, temperature='0.1')
+                    gemini_flash = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=google_api_key, temperature='0.1')
 
                     # Create chains
                     chain_1 = RunnableSequence(prompt_template_WRITER, gemini_pro)
@@ -86,14 +85,13 @@ def main():
         # Check if the download button was clicked
         if st.session_state.get("download_button", False) and st.session_state.get("gemini_pro") is not None:
             with st.spinner("Styling document for download..."):
-                # Apply styling
-                chain_styler = RunnableSequence(prompt_template_STYLER, st.session_state.gemini_pro)
-                report_styled = chain_styler.invoke({"REPORT_FINAL": st.session_state.final_content})
-                styled_content = report_styled.content
 
                 # Create DOCX with styled content
+                final_content = st.session_state.final_content
                 doc = Document()
-                for paragraph in styled_content.split('\n'):
+                for paragraph in final_content.split('\n'):
+                    if paragraph.strip() == "---" or paragraph.strip() == "":
+                        continue  # Skip sections separated by "---" and blank new lines
                     if paragraph.startswith('# '):
                         heading = doc.add_heading(paragraph[2:], level=1)
                         heading.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
