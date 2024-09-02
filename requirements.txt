@@ -3,4 +3,3 @@ langchain
 langchain_google_genai
 python-docx
 Markdown2docx
-tempfile
