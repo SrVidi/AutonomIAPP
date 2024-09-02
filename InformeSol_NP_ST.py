@@ -4,8 +4,8 @@ from langchain_core.runnables import RunnableSequence
 from langchain.prompts import load_prompt
 from docx import Document
 import io
-import tempfile
-from Markdown2docx import Markdown2docx
+from docx.shared import RGBColor
+from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 
 # Function to read the content of the uploaded file
 def read_uploaded_file(file):
@@ -91,22 +91,46 @@ def main():
                 report_styled = chain_styler.invoke({"REPORT_FINAL": st.session_state.final_content})
                 styled_content = report_styled.content
 
-                # Convert Markdown to DOCX
+                # Create DOCX with styled content
+                doc = Document()
+                for paragraph in styled_content.split('\n'):
+                    if paragraph.startswith('# '):
+                        heading = doc.add_heading(paragraph[2:], level=1)
+                        heading.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+                        for run in heading.runs:
+                            run.font.color.rgb = RGBColor(0, 0, 139)  # Dark Blue
+                    elif paragraph.startswith('## '):
+                        heading = doc.add_heading(paragraph[3:], level=2)
+                        for run in heading.runs:
+                            run.font.color.rgb = RGBColor(0, 0, 139)  # Dark Blue
+                    elif paragraph.startswith('### '):
+                        heading = doc.add_heading(paragraph[4:], level=3)
+                        for run in heading.runs:
+                            run.font.color.rgb = RGBColor(0, 0, 139)  # Dark Blue
+                    elif paragraph.startswith('* '):
+                        p = doc.add_paragraph(style='List Bullet')
+                        add_formatted_text(p, paragraph[2:])
+                    else:
+                        p = doc.add_paragraph()
+                        add_formatted_text(p, paragraph)
+                
                 bio = io.BytesIO()
-                with tempfile.NamedTemporaryFile(delete=False, suffix=".md") as temp_md_file:
-                    temp_md_file.write(styled_content.encode('utf-8'))
-                    temp_md_file.flush()
-                    temp_md_file_path = temp_md_file.name
-
-                docx_converter = Markdown2docx(temp_md_file_path, bio)
-                docx_converter.produce()
-
+                doc.save(bio)
+                
                 st.download_button(
                     label="Click here to download",
                     data=bio.getvalue(),
                     file_name="styled_final_report.docx",
                     mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                 )
+
+def add_formatted_text(paragraph, text):
+    parts = text.split('**')
+    for i, part in enumerate(parts):
+        if i % 2 == 0:
+            paragraph.add_run(part)
+        else:
+            paragraph.add_run(part).bold = True
 
 if __name__ == "__main__":
     main()
