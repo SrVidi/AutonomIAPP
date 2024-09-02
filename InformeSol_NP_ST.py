@@ -4,6 +4,7 @@ from langchain_core.runnables import RunnableSequence
 from langchain.prompts import load_prompt
 from docx import Document
 import io
+import tempfile
 from Markdown2docx import Markdown2docx
 
 # Function to read the content of the uploaded file
@@ -92,8 +93,14 @@ def main():
 
                 # Convert Markdown to DOCX
                 bio = io.BytesIO()
-                Markdown2docx(styled_content, bio)
-                
+                with tempfile.NamedTemporaryFile(delete=False, suffix=".md") as temp_md_file:
+                    temp_md_file.write(styled_content.encode('utf-8'))
+                    temp_md_file.flush()
+                    temp_md_file_path = temp_md_file.name
+
+                docx_converter = Markdown2docx(temp_md_file_path, bio)
+                docx_converter.produce()
+
                 st.download_button(
                     label="Click here to download",
                     data=bio.getvalue(),
