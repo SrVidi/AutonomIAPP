@@ -4,8 +4,7 @@ from langchain_core.runnables import RunnableSequence
 from langchain.prompts import load_prompt
 from docx import Document
 import io
-from docx.shared import RGBColor
-from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
+from Markdown2docx import markdown_to_docx
 
 # Function to read the content of the uploaded file
 def read_uploaded_file(file):
@@ -91,31 +90,9 @@ def main():
                 report_styled = chain_styler.invoke({"REPORT_FINAL": st.session_state.final_content})
                 styled_content = report_styled.content
 
-                # Create DOCX with styled content
-                doc = Document()
-                for paragraph in styled_content.split('\n'):
-                    if paragraph.startswith('# '):
-                        heading = doc.add_heading(paragraph[2:], level=1)
-                        heading.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-                        for run in heading.runs:
-                            run.font.color.rgb = RGBColor(0, 0, 139)  # Dark Blue
-                    elif paragraph.startswith('## '):
-                        heading = doc.add_heading(paragraph[3:], level=2)
-                        for run in heading.runs:
-                            run.font.color.rgb = RGBColor(0, 0, 139)  # Dark Blue
-                    elif paragraph.startswith('### '):
-                        heading = doc.add_heading(paragraph[4:], level=3)
-                        for run in heading.runs:
-                            run.font.color.rgb = RGBColor(0, 0, 139)  # Dark Blue
-                    elif paragraph.startswith('* '):
-                        p = doc.add_paragraph(style='List Bullet')
-                        add_formatted_text(p, paragraph[2:])
-                    else:
-                        p = doc.add_paragraph()
-                        add_formatted_text(p, paragraph)
-                
+                # Convert Markdown to DOCX
                 bio = io.BytesIO()
-                doc.save(bio)
+                markdown_to_docx(styled_content, bio)
                 
                 st.download_button(
                     label="Click here to download",
@@ -123,14 +100,6 @@ def main():
                     file_name="styled_final_report.docx",
                     mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                 )
-
-def add_formatted_text(paragraph, text):
-    parts = text.split('**')
-    for i, part in enumerate(parts):
-        if i % 2 == 0:
-            paragraph.add_run(part)
-        else:
-            paragraph.add_run(part).bold = True
 
 if __name__ == "__main__":
     main()
