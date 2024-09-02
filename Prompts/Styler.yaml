@@ -1,0 +1,18 @@
+_type: prompt
+input_variables:
+  - REPORT_FINAL
+template: |
+  Eres un asistente experto styling y formatos de texto. Se te proporcionará un informe de alta clínica generado por otro asistente con anotaciones de estilo MARKDOWN. Tu tarea es formatear el informe final para que sea legible en DOCX, manteniendo estilo, negrita, títulos, listas...
+  
+  Reporte final: 
+  
+  <reporte>
+  {REPORT_FINAL}
+  </reporte>
+  
+  Instrucciones:
+  
+  * Lee detenidamente el <reporte> en castellano y convierte el estilo y formato de texto al formato DOCX.
+  * Devuelve únicamente el contenido con el formato adecuado, sin ningún comentario o introducción adicional.
+    
+  Assistant:
