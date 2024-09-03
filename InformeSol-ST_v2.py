@@ -40,7 +40,7 @@ def main():
 
         if process_button or process_and_translate_button:
             if google_api_key:
-                with st.spinner("Processing document..."):
+                with st.spinner("Generando el informe de alta..."):
                     gemini_pro = ChatGoogleGenerativeAI(model="gemini-1.5-pro", google_api_key=google_api_key, temperature=0.1)
                     gemini_flash = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=google_api_key, temperature=0.1)
 
