@@ -91,10 +91,10 @@ def add_formatted_text(paragraph, text):
 
 def process_and_generate(file, google_api_key, language):
     if not google_api_key:
-        return "Please enter your Google API key.", None, None
+        return "Please enter your Google API key.", None, gr.update(visible=False)
     
     if not language:
-        return "Please select a language (Español or Català).", None, None
+        return "Please select a language (Español or Català).", None, gr.update(visible=False)
     
     try:
         final_content = generate_report(file, google_api_key, language)
@@ -108,12 +108,6 @@ def process_and_generate(file, google_api_key, language):
         return report_text, word_doc_path, gr.update(visible=True)
     except Exception as e:
         return f"An error occurred: {str(e)}", None, gr.update(visible=False)
-
-def download_file(file_path):
-    if file_path and os.path.exists(file_path):
-        return file_path
-    else:
-        return None
 
 # Gradio interface
 with gr.Blocks() as iface:
@@ -129,19 +123,12 @@ with gr.Blocks() as iface:
     
     with gr.Column():
         output_report = gr.Markdown(label="Generated Report")
-        word_doc_output = gr.File(label="Generated Word Document", visible=False)
-        download_button = gr.Button("Download Word Document", visible=False)
+        word_doc_output = gr.File(label="Download Word Document", visible=False)
 
     generate_button.click(
         process_and_generate,
         inputs=[file_input, api_key, language],
-        outputs=[output_report, word_doc_output, download_button]
-    )
-    
-    download_button.click(
-        download_file,
-        inputs=[word_doc_output],
-        outputs=[word_doc_output]
+        outputs=[output_report, word_doc_output, word_doc_output]
     )
 
 if __name__ == "__main__":
