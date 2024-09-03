@@ -26,11 +26,11 @@ prompt_template_TRANSLATOR = load_prompt("PromptsV2/Translator.yaml")
 def main():
     st.title("INFORME ALTA MÉDICA, IA W-R-F-T")
 
-    uploaded_file = st.file_uploader("Choose a file", type=["txt", "docx"])
+    uploaded_file = st.file_uploader("Subir archivo", type=["txt", "docx"])
 
     if uploaded_file is not None:
         file_content = read_uploaded_file(uploaded_file)
-        google_api_key = st.text_input("Enter your Google API Key", type="password")
+        google_api_key = st.text_input("Introduzca la clave API de Google", type="password")
 
         col1, col2 = st.columns(2)
         with col1:
