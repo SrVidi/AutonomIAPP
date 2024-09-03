@@ -34,9 +34,9 @@ def main():
 
         col1, col2 = st.columns(2)
         with col1:
-            process_button = st.button("Process Document")
+            process_button = st.button("Genera Informe en Español")
         with col2:
-            process_and_translate_button = st.button("Process and Translate Document")
+            process_and_translate_button = st.button("Genera Informe en Català")
 
         if process_button or process_and_translate_button:
             if google_api_key:
@@ -64,15 +64,15 @@ def main():
 
                     # Display the final report
                     st.markdown(final_content[0])  # Display the main report
-                    st.markdown("## Treatment")
+                    
                     st.markdown(final_content[1])  # Display the treatment report
 
                     st.session_state.final_content = final_content
                     st.session_state.gemini_pro = gemini_pro
 
-                    st.button("Download Styled Report as DOCX", key="download_button")
+                    st.button("Descargar Informe (Word)", key="download_button")
             else:
-                st.error("Please enter your Google API Key to process the document.")
+                st.error("Introduzca su clave API de Google")
 
         if st.session_state.get("download_button", False) and st.session_state.get("gemini_pro") is not None:
             with st.spinner("Styling document for download..."):
@@ -107,9 +107,9 @@ def main():
                 doc.save(bio)
                 
                 st.download_button(
-                    label="Click here to download",
+                    label="Report Final (Word)",
                     data=bio.getvalue(),
-                    file_name="styled_final_report.docx",
+                    file_name="Informe_Alta.docx",
                     mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                 )
 
