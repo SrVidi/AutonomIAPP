@@ -11,7 +11,19 @@ from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 def read_uploaded_file(file):
     if file.name.endswith('.docx'):
         doc = Document(file)
-        return ' '.join([paragraph.text for paragraph in doc.paragraphs])
+        
+        # Extract text from paragraphs
+        full_text = []
+        for paragraph in doc.paragraphs:
+            full_text.append(paragraph.text)
+        
+        # Extract text from tables
+        for table in doc.tables:
+            for row in table.rows:
+                for cell in row.cells:
+                    full_text.append(cell.text)
+        
+        return ' '.join(full_text)
     else:
         return file.read().decode("utf-8")
 
